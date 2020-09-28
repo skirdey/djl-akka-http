@@ -17,8 +17,8 @@ lazy val root = (project in file(".")).
 
       "ai.djl" % "api" % "0.7.0",
       "ai.djl.tensorflow" % "tensorflow-native-auto" % "2.3.0",
-      "ai.djl.tensorflow" % "tensorflow-model-zoo" % "0.7.0",
-      "ai.djl.tensorflow" % "tensorflow-engine" % "0.7.0",
+      "ai.djl.tensorflow" % "tensorflow-model-zoo" % "0.8.0",
+      "ai.djl.tensorflow" % "tensorflow-engine" % "0.8.0",
 
 "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
