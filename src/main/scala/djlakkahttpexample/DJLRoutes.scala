@@ -13,7 +13,6 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.AskPattern._
 import akka.util.Timeout
 
-
 //#import-json-formats
 class DJLRoutes(djl: ActorRef[DjlInference.Command])(implicit val system: ActorSystem[_]) {
 
@@ -25,7 +24,7 @@ class DJLRoutes(djl: ActorRef[DjlInference.Command])(implicit val system: ActorS
   private implicit val timeout = Timeout.create(Duration.ofSeconds(60))
 
 
-  def getInference(text: String): Future[ActionPerformed] = djl.ask(InferVector("text", _))
+  def getInference(text: InferenceRequest): Future[ActionPerformed] = djl.ask(InferVector(text, _))
 
   //#all-routes
   val djlRoutes: Route =
@@ -34,8 +33,8 @@ class DJLRoutes(djl: ActorRef[DjlInference.Command])(implicit val system: ActorS
         pathEnd {
           concat(
             post {
-              entity(as[String]) { user =>
-                onSuccess(getInference(user)) { performed =>
+              entity(as[InferenceRequest]) { text =>
+                onSuccess(getInference(text)) { performed =>
                   complete((StatusCodes.OK, performed))
                 }
               }
