@@ -22,15 +22,11 @@ import java.util.stream.Collectors;
 
 public final class UseExample {
 
+    static final ZooModel<String[], float[][]> model = loadModel();
+    static final ThreadLocal<Predictor<String[], float[][]>> predictorHolder = new ThreadLocal<>();
 
-    static final Predictor<String[], float[][]> predictor = getOrLoadPredictor();
 
-
-    private final static Predictor<String[], float[][]> getOrLoadPredictor() {
-
-        if(predictor != null){
-                return predictor;
-        }
+    private final static ZooModel<String[], float[][]> loadModel() {
         try {
             if (!"TensorFlow".equals(Engine.getInstance().getEngineName())) {
                 return null;
@@ -48,9 +44,7 @@ public final class UseExample {
                             .optProgress(new ProgressBar())
                             .build();
 
-            ZooModel<String[], float[][]> model = ModelZoo.loadModel(criteria);
-            Predictor<String[], float[][]> predictor = model.newPredictor();
-            return predictor;
+            return ModelZoo.loadModel(criteria);
         }catch (Exception ignored){
             return null;
         }
@@ -59,9 +53,12 @@ public final class UseExample {
 
     public static float[][] predict(List<String> inputs)
             throws TranslateException {
-        assert predictor != null;
+        Predictor<String[], float[][]> predictor = predictorHolder.get();
+        if (predictor == null) {
+            predictor = model.newPredictor();
+            predictorHolder.set(predictor);
+        }
         return predictor.predict(inputs.toArray(new String[0]));
-
     }
 
     private static final class MyTranslator implements Translator<String[], float[][]> {

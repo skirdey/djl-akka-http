@@ -34,3 +34,14 @@ Run unit tests:
 ```bash
 sbt test
 ```
+
+For TensorFlow to optimize on performance:
+
+```
+export OMP_NUM_THREADS=1
+export TF_NUM_INTEROP_THREADS=1
+export TF_NUM_INTRAOP_THREADS=1
+```
+
+For more information on optimization, you can check [here](
+).
