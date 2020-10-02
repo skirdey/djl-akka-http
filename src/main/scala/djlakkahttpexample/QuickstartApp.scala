@@ -30,6 +30,8 @@ object QuickstartApp {
   }
   //#start-http-server
   def main(args: Array[String]): Unit = {
+    System.setProperty("org.bytedeco.javacpp.maxphysicalbytes", "0") // override to avoid memory overflow
+    System.setProperty("org.bytedeco.javacpp.maxbytes", "0")
     //#server-bootstrapping
     val rootBehavior = Behaviors.setup[Nothing] { context =>
       val djlInferenceActor = context.spawn(DjlInference(), "DjlInferenceActor")

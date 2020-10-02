@@ -15,10 +15,9 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-stream"              % akkaVersion,
       "ch.qos.logback"    % "logback-classic"           % "1.2.3",
 
-      "ai.djl" % "api" % "0.7.0",
+      "ai.djl" % "api" % "0.8.0",
       "ai.djl.tensorflow" % "tensorflow-native-auto" % "2.3.0",
       "ai.djl.tensorflow" % "tensorflow-model-zoo" % "0.8.0",
-      "ai.djl.tensorflow" % "tensorflow-engine" % "0.8.0",
 
 "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
